@@ -102,10 +102,13 @@ Zakaz_N_T  = tk.Label(
         fg='black',
         bg='#f7fffd',
 )
-Zakaz_N_C = tk.Entry(
+Zakaz_N_C = ttk.Combobox(
     Vkladki[1],
     font=('Consolas', 14),
+    width=1,
 )
+Zakaz_N_C['values'] =tuple(range(1,7))
+
 Zakaz_T_Z =tk.Label(
         Vkladki[1],
         text='Час, з:          до:     ',
@@ -150,6 +153,22 @@ Zakaz_B = tk.Button(
     height=1,
     bg='#8cffa7'
 )
+Menu = tk.Label(
+    Vkladki[2],
+    text='''В даній вкладці можна настроїти скільки коштує година гри,
+подивитися статистику за різні періоди''',
+    font=('Consolas', 14),
+    fg='black',
+    bg='#f7fffd',
+)
+
+Quest = tk.Label(
+    Vkladki[3],
+    text='''В даній вкладці описано як користуватися програмою''',
+    font=('Consolas', 14),
+    fg='black',
+    bg='#f7fffd',
+)
 #Налаштування розміщення  елементів
 i=0
 while i<=3:
@@ -191,4 +210,6 @@ Zakaz_T_M.place(x=151, y=60)
 Zakaz_T_H_D.place(x=233, y=60)
 Zakaz_T_M_D.place(x=280, y=60)
 Zakaz_B.place(x=30, y=110)
+
+Menu.place(x=30, y=10)
 window.mainloop()
