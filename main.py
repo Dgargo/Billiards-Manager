@@ -14,16 +14,17 @@ window.configure(bg='#f7fffd')
 #Налаштування вкладок
 nb = ttk.Notebook(window,height=800)
 nb.pack(pady=10,fill='both')
-Vkladki =['Golovna','Zakaz','Menu','Quest']
+Vkladki =['Golovna','Zakaz','Bronik','Menu','Quest']
 i= 0
-while i<=3:
+while i<=4:
     Vkladki[i] = ttk.Frame(window)
     i +=1
 
 nb.add(Vkladki[0],text='Головна')
 nb.add(Vkladki[1],text='Новий заказ')
-nb.add(Vkladki[2],text='Меню')
-nb.add(Vkladki[3],text='?')
+nb.add(Vkladki[2],text='Заброньовані')
+nb.add(Vkladki[3],text='Меню')
+nb.add(Vkladki[4],text='?')
 
 #Імпорт картинок
 table_img_one ="image/table.png"
@@ -34,9 +35,9 @@ gray = ImageTk.PhotoImage(Image.open(stan_null_img))
 stan_gray =tk.Label(Vkladki[0], image= gray)
 
 #Налаштування  стилю фону вкладок
-fon = [1,2,3,4]
+fon = [1,2,3,4,5]
 i=0
-while i<=3:
+while i<=4:
     fon[i] = tk.Label(
         Vkladki[i],
         bg='#f7fffd',
@@ -153,8 +154,22 @@ Zakaz_B = tk.Button(
     height=1,
     bg='#8cffa7'
 )
+Bron = []
+for i in range(10,24):
+    Bron.append(i)
+i = 0
+while i <= 13:
+
+    Bron[i] =tk.Label(
+        Vkladki[2],
+        text=f'{Bron[i]}',
+        font=('Consolas',16),
+        bg='#3de060',
+        )
+    i += 1
+
 Menu = tk.Label(
-    Vkladki[2],
+    Vkladki[3],
     text='''В даній вкладці можна настроїти скільки коштує година гри,
 подивитися статистику за різні періоди''',
     font=('Consolas', 14),
@@ -163,15 +178,16 @@ Menu = tk.Label(
 )
 
 Quest = tk.Label(
-    Vkladki[3],
+    Vkladki[4],
     text='''В даній вкладці описано як користуватися програмою''',
     font=('Consolas', 14),
     fg='black',
     bg='#f7fffd',
 )
+
 #Налаштування розміщення  елементів
 i=0
-while i<=3:
+while i<=4:
     fon[i].pack()
     i +=1
 table[0].place(x=20, y=50)
@@ -204,12 +220,20 @@ time[5].place(x=550, y=680)
 
 Zakaz_N_T.place(x=30, y=25)
 Zakaz_N_C.place(x=155, y=25)
-Zakaz_T_Z.place(x=30, y=60)
-Zakaz_T_H.place(x=105, y=60)
-Zakaz_T_M.place(x=151, y=60)
-Zakaz_T_H_D.place(x=233, y=60)
-Zakaz_T_M_D.place(x=280, y=60)
-Zakaz_B.place(x=30, y=110)
+Zakaz_T_Z.place(x=30, y=80)
+Zakaz_T_H.place(x=105, y=80)
+Zakaz_T_M.place(x=151, y=80)
+Zakaz_T_H_D.place(x=233, y=80)
+Zakaz_T_M_D.place(x=280, y=80)
+Zakaz_B.place(x=30, y=130)
+i =0
+x1 = 50
+y1 = 20
+while i <=13:
+    Bron[i].place(x=x1, y =y1)
+    x1 +=31
+    i  +=1
 
 Menu.place(x=30, y=10)
+Quest.place(x=30, y=10)
 window.mainloop()
