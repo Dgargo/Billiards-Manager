@@ -3,16 +3,11 @@ from tkinter import *
 import tkinter as tk
 import tkinter.ttk as ttk
 from PIL import ImageTk, Image
-from Golovna import Stolic
-from Golovna import Fon
-from Golovna import Stolic_Text
-from Golovna import Stolic_time
 
-from Bron import Bronik
-from Bron import BronMas
-from Bron import BronPlace
-from Bron import BronNum
-from Bron import BronNumPlace
+from Golovna import Stolic,Fon,Stolic_time,Stolic_Text
+
+from Bron import Bronik,BronTime,BronPlace,BronNum,BronNumPlace,BronMas,BronPlaceTime
+
 #Налоштування головного вікна
 window = Tk()
 window.title('Billiards manager V1')
@@ -120,6 +115,8 @@ Zakaz_B = tk.Button(
         height=1,
         bg='#8cffa7'
     )
+
+#Вкладка Заброньвані
 Bron1 = []
 BronMas(Bron1)
 Bronik(0,Bron1,Vkladki)
@@ -138,7 +135,9 @@ Bronik(0,Bron5,Vkladki)
 Bron6 = []
 BronMas(Bron6)
 Bronik(0,Bron6,Vkladki)
-
+Bron7 =[]
+BronMas(Bron7)
+BronTime(0,Bron7,Vkladki)
 Number = [1,2,3,4,5,6]
 BronNum(0,Number,Vkladki)
 
@@ -147,6 +146,7 @@ i=0
 while i<=4:
     fon[i].pack()
     i +=1
+
 table[0].place(x=20, y=50)
 table[1].place(x=470, y=50)
 table[2].place(x=20, y=300)
@@ -184,12 +184,13 @@ Zakaz_T_H_D.place(x=233, y=80)
 Zakaz_T_M_D.place(x=280, y=80)
 Zakaz_B.place(x=30, y=130)
 
-BronPlace(0,Bron1,60,20)
+BronPlace(0,Bron1,60,55)
 BronPlace(0,Bron2,60,100)
-BronPlace(0,Bron3,60,180)
-BronPlace(0,Bron4,60,260)
-BronPlace(0,Bron5,60,340)
-BronPlace(0,Bron6,60,420)
-BronNumPlace(0,Number,10,20)
+BronPlace(0,Bron3,60,145)
+BronPlace(0,Bron4,60,190)
+BronPlace(0,Bron5,60,235)
+BronPlace(0,Bron6,60,280)
+BronNumPlace(0,Number,10,53)
+BronPlaceTime(0,Bron7,60,10)
 
 window.mainloop()
