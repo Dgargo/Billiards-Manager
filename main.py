@@ -5,7 +5,6 @@ import tkinter.ttk as ttk
 from PIL import ImageTk, Image
 
 from Golovna import Stolic,Fon,Stolic_time,Stolic_Text
-
 from Bron import Bronik,BronTime,BronPlace,BronNum,BronNumPlace,BronMas,BronPlaceTime
 
 #Налоштування головного вікна
