@@ -46,3 +46,14 @@ def Stolic_time(i,time,Vkladki):
             bg='#f7fffd',
         )
         i += 1
+#Налаштування стилю кнопки скидання
+def Reset(i,res,Vkladki,img):
+    while i<=5:
+        res[i]=tk.Button(
+            Vkladki[0],
+            bg = '#fc2803',
+            image=img
+        )
+        i += 1
+
+

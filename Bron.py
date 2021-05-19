@@ -64,3 +64,4 @@ def BronNumPlace(i,Bron1,x1,y1):
         Bron1[i].place(x=x1, y=y1)
         y1 += 45
         i += 1
+
