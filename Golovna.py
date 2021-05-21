@@ -29,7 +29,7 @@ def Stolic_Text(i,text,Vkladki):
         text[i] = tk.Label(
             Vkladki[0],
             text=f'№{text[i]}',
-            font=('Consolas', 14),
+            font=('Arial Black', 14),
             fg='black',
             bg='#f7fffd',
         )
@@ -41,7 +41,7 @@ def Stolic_time(i,time,Vkladki):
         time[i] = tk.Label(
             Vkladki[0],
             text='00:00:00',
-            font=('Consolas', 14),
+            font=('Arial Black', 12),
             fg='black',
             bg='#f7fffd',
         )

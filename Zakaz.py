@@ -8,7 +8,7 @@ def NameZakaz(i,Zakaz_Name,Vkladki,text):
     Zakaz_Name[i] =tk.Label(
         Vkladki[1],
         text = text,
-        font=('Consolas', 20),
+        font=('Arial Black', 20),
         bg='#f7fffd'
 
     )
@@ -18,7 +18,7 @@ def Button_Z(i,Zakaz_B,Vkladki):
         Zakaz_B[i] = tk.Button(
             Vkladki[1],
             text='Відправити',
-            font=('Consolas', 14),
+            font=('Arial Black', 14),
             width=15,
             height=1,
             bg='#8cffa7'
@@ -30,7 +30,7 @@ def Number_Tap_text(i,Num_Tab,Vkladki):
         Num_Tab[i] = tk.Label(
             Vkladki[1],
             text='Номер Стола:',
-            font=('Consolas', 14),
+            font=('Arial Black', 12),
             fg='black',
             bg='#f7fffd',
         )

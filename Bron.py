@@ -14,7 +14,7 @@ def BronTime(i,Bron,Vkladki):
         Bron[i] = tk.Label(
             Vkladki[2],
             text=Bron[i],
-            font=('Consolas', 20),
+            font=('Arial Black', 18),
             bg='#c0fcee',
             width=2
         )
@@ -24,7 +24,7 @@ def BronTime(i,Bron,Vkladki):
 def BronPlaceTime(i,Bron1,x1,y1):
     while i <= 13:
         Bron1[i].place(x=x1, y=y1)
-        x1 += 40
+        x1 += 41
         i += 1
 
 #Налаштування  стилю  для рядків з бронюванням
@@ -33,7 +33,7 @@ def Bronik(i,Bron,Vkladki):
         Bron[i] = tk.Label(
             Vkladki[2],
             text='+',
-            font=('Consolas', 20),
+            font=('Arial Black', 18),
             bg='#3de060',
             width=2
         )
@@ -43,7 +43,7 @@ def Bronik(i,Bron,Vkladki):
 def BronPlace(i,Bron1,x1,y1):
     while i <= 13:
         Bron1[i].place(x=x1, y=y1)
-        x1 += 40
+        x1 += 41
         i += 1
 
 #Налаштування  стилю для столбця з номером стола
@@ -52,7 +52,7 @@ def BronNum(i,text,Vkladki):
         text[i] = tk.Label(
             Vkladki[2],
             text=f'№{text[i]}',
-            font=('Consolas', 20),
+            font=('Arial Black', 18),
             fg='black',
             bg='#c0fcee',
         )
