@@ -7,7 +7,7 @@ def Fon(i,fon,Vkladki):
     while i <= 4:
         fon[i] = tk.Label(
             Vkladki[i],
-            bg='#f7fffd',
+            bg='#086e02',
             height=1000,
             width=800,
         )
@@ -18,7 +18,7 @@ def Stolic(i,table,Vkladki,img):
     while i <= 5:
         table[i] = tk.Label(
             Vkladki[0],
-            bg='#f7fffd',
+            bg = '#086e02',
             image=img
         )
         i += 1
@@ -31,7 +31,7 @@ def Stolic_Text(i,text,Vkladki):
             text=f'№{text[i]}',
             font=('Arial Black', 14),
             fg='black',
-            bg='#f7fffd',
+            bg='#086e02',
         )
         i += 1
 
@@ -42,8 +42,7 @@ def Stolic_time(i,time,Vkladki):
             Vkladki[0],
             text='00:00:00',
             font=('Arial Black', 12),
-            fg='black',
-            bg='#f7fffd',
+            bg='#086e02',
         )
         i += 1
 #Налаштування стилю кнопки скидання
@@ -51,8 +50,9 @@ def Reset(i,res,Vkladki,img):
     while i<=5:
         res[i]=tk.Button(
             Vkladki[0],
-            bg = '#fc2803',
-            image=img
+            bg = '#e82528',
+            image=img,
+
         )
         i += 1
 

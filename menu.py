@@ -6,7 +6,7 @@ import tkinter.ttk as ttk
 def M_Text(i,Name,Vkladki,Fsize,text):
     Name[i] = tk.Label(
         Vkladki[3],
-        bg = '#f7fffd',
+        bg = '#086e02',
         font=('Arial Black', Fsize),
         text = text,
         )

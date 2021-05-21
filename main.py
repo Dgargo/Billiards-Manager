@@ -13,11 +13,11 @@ from menu import M_Text
 #Налоштування головного вікна
 window = Tk()
 window.title('Billiards manager V1')
-window.geometry('800x800')
+window.geometry('700x780')
 window.configure(bg='#f7fffd')
 #Налаштування вкладок
 nb = ttk.Notebook(window,height=800)
-nb.pack(pady=10,fill='both')
+nb.pack(pady=5,fill='both')
 Vkladki =['Golovna','Zakaz','Bronik','Menu','Quest']
 i= 0
 while i<=4:
@@ -92,7 +92,7 @@ Zakaz_Time =tk.Label(
         text='Час, з:                     до:     ',
         font=('Arial Black', 12),
         fg='black',
-        bg='#f7fffd',
+        bg='#086e02',
 )
 #
 Zakaz_Time_fHour = ttk.Combobox(
@@ -129,7 +129,7 @@ Zakaz_TextH = tk.Label(
     Vkladki[1],
     text='Кількість           год.           хв.',
     font=('Arial Black', 12),
-    bg='#f7fffd',
+    bg='#086e02',
 )
 
 Zakaz_TimeH_Hour = ttk.Combobox(
@@ -171,7 +171,7 @@ Number = [1,2,3,4,5,6]
 BronNum(0,Number,Vkladki)
 
 Menu_Text = ['1','2','3']
-M_Text(0,Menu_Text,Vkladki,20,'Вхід до панелі адміна')
+M_Text(0,Menu_Text,Vkladki,16,'Вхід до панелі адміна')
 M_Text(1,Menu_Text,Vkladki,12,'Логін:')
 M_Text(2,Menu_Text,Vkladki,12,'Пароль:')
 login = StringVar()
@@ -180,14 +180,14 @@ parol = StringVar()
 M_Login = tk.Entry(
             Vkladki[3],
             width=15,
-            font=('Arial Black', 14),
+            font=('Arial Black', 12),
             textvariable=login
 
 )
 M_Parol = tk.Entry(
             Vkladki[3],
             width=15,
-            font=('Arial Black', 14),
+            font=('Arial Black', 12),
             show='*',
             textvariable=parol
 )
@@ -216,18 +216,18 @@ suma = 100
 def panel():
     if login.get() =='admin':
         if parol.get() == 'admin':
-            AdminPanel = tk.Toplevel(Vkladki[3],bg='#f7fffd')
+            AdminPanel = tk.Toplevel(Vkladki[3],bg='#086e02')
             AdminPanel.geometry('820x500')
             AdminPanel.resizable(False, False)
             AdminText = tk.Label(AdminPanel,
                                  text="Адмін панель",
                                  font=('Arial Black', 18),
-                                 bg='#f7fffd'
+                                 bg='#086e02'
                                  )
             Price_Text = tk.Label(AdminPanel,
                                   text="Вартість оренди за 1 год:",
                                   font=('Arial Black', 12),
-                                  bg='#f7fffd'
+                                  bg='#086e02'
                                   )
             Price = tk.Entry(AdminPanel,
                              width =10,
@@ -241,7 +241,7 @@ def panel():
             Suma_day = tk.Label(AdminPanel,
                                 text =f'В касі мають бути: {suma} грн.',
                                 font=('Arial Black', 12),
-                                bg='#f7fffd'
+                                bg='#086e02'
                                 )
             stat = ['1','7','30']
             static(0,stat,AdminPanel,100,2,3)
@@ -249,7 +249,7 @@ def panel():
             static(2, stat, AdminPanel, 5000, 25, 150)
             stat_Period = ['1','7','30']
             stat_Text(0,stat_Period,AdminPanel,'Вчора')
-            stat_Text(1, stat_Period, AdminPanel, '7 Двів')
+            stat_Text(1, stat_Period, AdminPanel, '7 Днів')
             stat_Text(2, stat_Period, AdminPanel, '30 Днів')
             stat[0].place(x = 20 ,y=180)
             stat[1].place(x = 280,y=180)
@@ -268,7 +268,7 @@ def panel():
                 font=('Arial Black', 14),
                 fg='red',
                 text='Неправильний пароль!!!',
-                bg='#f7fffd',
+                bg='#f0ffff',
             )
             wronk.place(x=35,y=200)
 
@@ -296,12 +296,12 @@ table[3].place(x=470, y=300)
 table[4].place(x=20, y=550)
 table[5].place(x=470, y=550)
 
-text[0].place(x=100, y=20)
-text[1].place(x=550, y=20)
-text[2].place(x=100, y=270)
-text[3].place(x=550, y=270)
-text[4].place(x=100, y=520)
-text[5].place(x=550, y=520)
+text[0].place(x=100, y=19)
+text[1].place(x=550, y=19)
+text[2].place(x=100, y=269)
+text[3].place(x=550, y=269)
+text[4].place(x=100, y=519)
+text[5].place(x=550, y=519)
 
 stan[0].place(x=20, y=165)
 stan[1].place(x=470, y=165)

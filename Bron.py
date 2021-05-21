@@ -15,7 +15,7 @@ def BronTime(i,Bron,Vkladki):
             Vkladki[2],
             text=Bron[i],
             font=('Arial Black', 18),
-            bg='#c0fcee',
+            bg='#14802a',
             width=2
         )
         i += 1
@@ -34,7 +34,7 @@ def Bronik(i,Bron,Vkladki):
             Vkladki[2],
             text='+',
             font=('Arial Black', 18),
-            bg='#3de060',
+            bg='#1dd141',
             width=2
         )
         i += 1
@@ -54,7 +54,8 @@ def BronNum(i,text,Vkladki):
             text=f'№{text[i]}',
             font=('Arial Black', 18),
             fg='black',
-            bg='#c0fcee',
+            bg='#14802a',
+            
         )
         i += 1
 
