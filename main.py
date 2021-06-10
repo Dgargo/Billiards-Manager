@@ -6,7 +6,6 @@ from PIL import ImageTk, Image
 from tkinter import messagebox
 
 from Golovna import Stolic,Fon,Stolic_time,Stolic_Text,Reset
-from Bron import Bronik,BronTime,BronPlace,BronNum,BronNumPlace,BronMas,BronPlaceTime
 from Zakaz import  Button_Z,NameZakaz ,Number_Tap_text
 from menu import M_Text
 
@@ -26,9 +25,8 @@ while i<=4:
 
 nb.add(Vkladki[0],text='Головна')
 nb.add(Vkladki[1],text='Новий заказ')
-nb.add(Vkladki[2],text='Заброньовані')
 nb.add(Vkladki[3],text='Меню')
-nb.add(Vkladki[4],text='?')
+
 
 #Імпорт картинок
 table_img_one ="image/table.png"
@@ -80,35 +78,23 @@ Zakaz_NumB_Check = ttk.Combobox(
 )
 Zakaz_NumB_Check['values'] =tuple(range(1,7))
 
-Zakaz_NumH_Check = ttk.Combobox(
-    Vkladki[1],
-    font=('Arial Black', 12),
-    width=1,
-)
-Zakaz_NumH_Check['values'] =tuple(range(1,7))
+
 #Налаштування тексту
 Zakaz_Time =tk.Label(
         Vkladki[1],
-        text='Час, з:                     до:     ',
+        text='Час, з:             до:     ',
         font=('Arial Black', 12),
         fg='black',
         bg='#086e02',
 )
-#
+
 Zakaz_Time_fHour = ttk.Combobox(
     Vkladki[1],
     font=('Arial Black', 12),
     width=2,
     )
 Zakaz_Time_fHour['values'] = tuple(range(10,24))
-#
-Zakaz_Time_fMin = ttk.Combobox(
-    Vkladki[1],
-    font=('Arial Black', 12),
-    width =2,
-)
-Zakaz_Time_fMin['values'] = tuple(range(0, 60))
-#
+
 Zakaz_Time_tHour = ttk.Combobox(
     Vkladki[1],
     font=('Arial Black', 12),
@@ -116,59 +102,10 @@ Zakaz_Time_tHour = ttk.Combobox(
 )
 Zakaz_Time_tHour['values'] = tuple(range(11,25))
 
-Zakaz_Time_tMin = ttk.Combobox(
-    Vkladki[1],
-    font=('Arial Black', 12),
-    width =2,
-)
-Zakaz_Time_tMin['values'] = tuple(range(0, 60))
+
 Zakaz_Button = ['1','2']
 Button_Z(0,Zakaz_Button,Vkladki)
 
-Zakaz_TextH = tk.Label(
-    Vkladki[1],
-    text='Кількість           год.           хв.',
-    font=('Arial Black', 12),
-    bg='#086e02',
-)
-
-Zakaz_TimeH_Hour = ttk.Combobox(
-    Vkladki[1],
-    font=('Consolas', 12),
-    width=2,
-    )
-Zakaz_TimeH_Hour['values'] = tuple(range(0,13))
-
-Zakaz_TimeH_Min =ttk.Combobox(
-    Vkladki[1],
-    font=('Arial Black', 12),
-    width =2,
-)
-Zakaz_TimeH_Min['values']=  (0,15,30,45)
-#Вкладка Заброньвані
-Bron1 = []
-BronMas(Bron1)
-Bronik(0,Bron1,Vkladki)
-Bron2 = []
-BronMas(Bron2)
-Bronik(0,Bron2,Vkladki)
-Bron3 = []
-BronMas(Bron3)
-Bronik(0,Bron3,Vkladki)
-Bron4 = []
-BronMas(Bron4)
-Bronik(0,Bron4,Vkladki)
-Bron5 = []
-BronMas(Bron5)
-Bronik(0,Bron5,Vkladki)
-Bron6 = []
-BronMas(Bron6)
-Bronik(0,Bron6,Vkladki)
-Bron7 =[]
-BronMas(Bron7)
-BronTime(0,Bron7,Vkladki)
-Number = [1,2,3,4,5,6]
-BronNum(0,Number,Vkladki)
 
 Menu_Text = ['1','2','3']
 M_Text(0,Menu_Text,Vkladki,16,'Вхід до панелі адміна')
@@ -329,27 +266,10 @@ Zakaz_Num_Tap[0].place(x=30, y=75)
 Zakaz_NumB_Check.place(x=160, y=75)
 Zakaz_Time.place(x=30, y=130)
 Zakaz_Time_fHour.place(x=100, y=130)
-Zakaz_Time_fMin.place(x=150, y=130)
-Zakaz_Time_tHour.place(x=235, y=130)
-Zakaz_Time_tMin.place(x=285, y=130)
+Zakaz_Time_tHour.place(x=193, y=130)
 Zakaz_Button[0].place(x=30, y=180)
 
-Zakaz_Text[1].place(x=50, y=250)
-Zakaz_Num_Tap[1].place(x=30, y=300)
-Zakaz_NumH_Check.place(x=160, y=300)
-Zakaz_TextH.place(x=30,y=355)
-Zakaz_TimeH_Hour.place(x=120,y=355)
-Zakaz_TimeH_Min.place(x=210,y=355)
-Zakaz_Button[1].place(x=30, y=415)
 
-BronPlace(0,Bron1,65,55)
-BronPlace(0,Bron2,65,100)
-BronPlace(0,Bron3,65,145)
-BronPlace(0,Bron4,65,190)
-BronPlace(0,Bron5,65,235)
-BronPlace(0,Bron6,65,280)
-BronNumPlace(0,Number,10,53)
-BronPlaceTime(0,Bron7,65,10)
 
 Menu_Text[0].place(x=50,y=10)
 Menu_Text[1].place(x=15,y=65)
