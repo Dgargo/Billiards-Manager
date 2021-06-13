@@ -4,10 +4,27 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from PIL import ImageTk, Image
 from tkinter import messagebox
-
+import time
 from Golovna import Stolic,Fon,Stolic_time,Stolic_Text,Reset
 from Zakaz import  Button_Z,NameZakaz ,Number_Tap_text
 from menu import M_Text
+import mysql.connector
+from mysql.connector import connect, Error,cursor
+
+
+
+#БАЗА ДАНИХ
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  database="billiard_room_statistics "
+)
+mycursor = mydb.cursor()
+billiard_room_statistics = """
+INSERT INTO main_info 
+( ordertime,	tablenumber)
+VALUES ( %s ,%s)
+"""
 
 #Налоштування головного вікна
 window = Tk()
@@ -70,14 +87,19 @@ NameZakaz(0,Zakaz_Text,Vkladki,"Забронювати стіл :")
 NameZakaz(1,Zakaz_Text,Vkladki,'Експресс заказ:')
 Zakaz_Num_Tap =['1','2']
 Number_Tap_text(0,Zakaz_Num_Tap,Vkladki)
+NumZ = StringVar()
+FHourZ = IntVar()
+THourZ = IntVar()
+
 #Вибір номеру стола
 Zakaz_NumB_Check = ttk.Combobox(
     Vkladki[1],
     font=('Arial Black', 12),
     width=1,
+    textvariable=NumZ
 )
-Zakaz_NumB_Check['values'] =tuple(range(1,7))
 
+Zakaz_NumB_Check['values'] =tuple(range(1,7))
 
 #Налаштування тексту
 Zakaz_Time =tk.Label(
@@ -92,6 +114,7 @@ Zakaz_Time_fHour = ttk.Combobox(
     Vkladki[1],
     font=('Arial Black', 12),
     width=2,
+    textvariable=FHourZ
     )
 Zakaz_Time_fHour['values'] = tuple(range(10,24))
 
@@ -99,12 +122,41 @@ Zakaz_Time_tHour = ttk.Combobox(
     Vkladki[1],
     font=('Arial Black', 12),
     width =2,
+    textvariable=THourZ
 )
 Zakaz_Time_tHour['values'] = tuple(range(11,25))
 
-
 Zakaz_Button = ['1','2']
 Button_Z(0,Zakaz_Button,Vkladki)
+
+def sendZakaz():
+    count =  1
+    main_infos = [count,NumZ.get]
+    mycursor.executemany(billiard_room_statistics, main_infos)
+    mydb.commit()
+
+
+Zakaz_Button[0].configure(command = sendZakaz)
+
+Zakaz_NumH_Check = ttk.Combobox(
+    Vkladki[1],
+    font=('Arial Black', 12),
+    width=1,
+)
+Zakaz_NumH_Check['values'] =tuple(range(1,7))
+Zakaz_TextH = tk.Label(
+    Vkladki[1],
+    text='Кількість:           год.',
+    font=('Arial Black', 12),
+    bg='#086e02',
+)
+
+Zakaz_TimeH_Hour = ttk.Combobox(
+    Vkladki[1],
+    font=('Consolas', 12),
+    width=2,
+    )
+Zakaz_TimeH_Hour['values'] = tuple(range(0,13))
 
 
 Menu_Text = ['1','2','3']
@@ -268,7 +320,12 @@ Zakaz_Time.place(x=30, y=130)
 Zakaz_Time_fHour.place(x=100, y=130)
 Zakaz_Time_tHour.place(x=193, y=130)
 Zakaz_Button[0].place(x=30, y=180)
-
+Zakaz_Text[1].place(x=50, y=250)
+Zakaz_Num_Tap[1].place(x=30, y=300)
+Zakaz_NumH_Check.place(x=160, y=300)
+Zakaz_TextH.place(x=30,y=355)
+Zakaz_TimeH_Hour.place(x=125,y=355)
+Zakaz_Button[1].place(x=30, y=415)
 
 
 Menu_Text[0].place(x=50,y=10)
@@ -277,4 +334,7 @@ Menu_Text[2].place(x=15,y=100)
 M_Login.place(x=95,y=65)
 M_Parol.place(x=95,y=100)
 M_Button.place(x=85,y=150)
+
+
+
 window.mainloop()

@@ -23,6 +23,7 @@ def Button_Z(i,Zakaz_B,Vkladki):
             height=1,
             bg='#8cffa7',
             relief =RIDGE
+
         )
         i +=1
 #Стиль  тексту "Номер стола"
