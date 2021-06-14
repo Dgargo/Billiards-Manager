@@ -4,14 +4,15 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from PIL import ImageTk, Image
 from tkinter import messagebox
-import time
+import serial
+from datetime import datetime, timedelta
 from Golovna import Stolic,Fon,Stolic_time,Stolic_Text,Reset
 from Zakaz import  Button_Z,NameZakaz ,Number_Tap_text
 from menu import M_Text
 import mysql.connector
 from mysql.connector import connect, Error,cursor
 
-
+ser = serial.Serial('COM3', 9600)
 
 #БАЗА ДАНИХ
 mydb = mysql.connector.connect(
@@ -87,10 +88,11 @@ NameZakaz(0,Zakaz_Text,Vkladki,"Забронювати стіл :")
 NameZakaz(1,Zakaz_Text,Vkladki,'Експресс заказ:')
 Zakaz_Num_Tap =['1','2']
 Number_Tap_text(0,Zakaz_Num_Tap,Vkladki)
-NumZ = StringVar()
+NumZ = IntVar()
+NumHotZ = IntVar()
 FHourZ = IntVar()
 THourZ = IntVar()
-
+HourHotZ = IntVar()
 #Вибір номеру стола
 Zakaz_NumB_Check = ttk.Combobox(
     Vkladki[1],
@@ -128,20 +130,20 @@ Zakaz_Time_tHour['values'] = tuple(range(11,25))
 
 Zakaz_Button = ['1','2']
 Button_Z(0,Zakaz_Button,Vkladki)
-
+'''
 def sendZakaz():
     count =  1
     main_infos = [count,NumZ.get]
     mycursor.executemany(billiard_room_statistics, main_infos)
     mydb.commit()
+'''
 
-
-Zakaz_Button[0].configure(command = sendZakaz)
 
 Zakaz_NumH_Check = ttk.Combobox(
     Vkladki[1],
     font=('Arial Black', 12),
     width=1,
+    textvarible =NumHotZ
 )
 Zakaz_NumH_Check['values'] =tuple(range(1,7))
 Zakaz_TextH = tk.Label(
@@ -155,9 +157,18 @@ Zakaz_TimeH_Hour = ttk.Combobox(
     Vkladki[1],
     font=('Consolas', 12),
     width=2,
+    textvariable=HourHotZ
     )
 Zakaz_TimeH_Hour['values'] = tuple(range(0,13))
 
+def sendHot():
+    clockHot = datetime.now() + timedelta(hours = HourHotZ.get())
+    Num = (NumHotZ.get() *10 )
+    ser.write(int((Num+1), 'UTF-8'))
+    if datetime.now() >= clockHot :
+        ser.write(int(Num, 'UTF-8'))
+
+Zakaz_Button[1].configure(command = sendHot())
 
 Menu_Text = ['1','2','3']
 M_Text(0,Menu_Text,Vkladki,16,'Вхід до панелі адміна')
