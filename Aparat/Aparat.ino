@@ -1,14 +1,13 @@
 int pin
 int mode
-int incomingByte
-int pinCount
+int incomingByte 
+
 
 void setup(){
   Serial.begin(9600);
    for(var i = 5 ;i<11 :i++){
     pinMode(i,OUTPUT);
     }
-    pinCount = 6;
   }
 
 void loop(){
@@ -17,10 +16,10 @@ void loop(){
     pin =((incomingByte-incomingByte%10)/10)+4;
     mode = incomingByte%10;
 
-    if(mode !=0 && mode!=1){
+    if (mode !=0 && mode !=1){
       mode = 0;
       }
-    if(pin <= pinCount+4){
+    if(pin <= 10){
       digitalWrite(pin,mode);
       }
       

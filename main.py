@@ -11,9 +11,12 @@ from Zakaz import  Button_Z,NameZakaz ,Number_Tap_text
 from menu import M_Text
 import mysql.connector
 from mysql.connector import connect, Error,cursor
-
-ser = serial.Serial('COM3', 9600)
-
+from threading import Thread
+from time import sleep
+'''
+ser = serial.Serial('COM4', 9600)
+'''
+clockHot = [1,2,3,4,5,6]
 #БАЗА ДАНИХ
 mydb = mysql.connector.connect(
   host="localhost",
@@ -50,13 +53,18 @@ nb.add(Vkladki[3],text='Меню')
 table_img_one ="image/table.png"
 img = ImageTk.PhotoImage(Image.open(table_img_one))
 panel = tk.Label(Vkladki[0], image=img)
+
 stan_null_img="image/Gray.png"
 gray = ImageTk.PhotoImage(Image.open(stan_null_img))
 stan_gray =tk.Label(Vkladki[0], image= gray)
+
 reset_img = "image/reset.png"
 reset = ImageTk.PhotoImage(Image.open(reset_img))
 resetI =tk.Label(Vkladki[0], image= reset)
 
+red_img = "image/red.png"
+red = ImageTk.PhotoImage(Image.open(red_img))
+redI = tk.Label(Vkladki[0],image = red)
 #Налаштування  стилю фону вкладок
 fon = [1,2,3,4,5]
 Fon(0,fon,Vkladki)
@@ -143,7 +151,7 @@ Zakaz_NumH_Check = ttk.Combobox(
     Vkladki[1],
     font=('Arial Black', 12),
     width=1,
-    textvarible =NumHotZ
+    textvariable=NumHotZ
 )
 Zakaz_NumH_Check['values'] =tuple(range(1,7))
 Zakaz_TextH = tk.Label(
@@ -160,13 +168,30 @@ Zakaz_TimeH_Hour = ttk.Combobox(
     textvariable=HourHotZ
     )
 Zakaz_TimeH_Hour['values'] = tuple(range(0,13))
+def HourHot(i):
+     if clockHot[i] < datetime.now():
+         sleep(60)
+         stan[i].configure(image=red)
+
+
+     else :
+         '''ser.write(int((NumOff), 'UTF-8'))'''
+         stan[i].configure(image=gray)
+
+
 
 def sendHot():
-    clockHot = datetime.now() + timedelta(hours = HourHotZ.get())
+    i = NumHotZ.get() - 1
+    clockHot[i] = datetime.now() + timedelta(hours = HourHotZ.get())
+    '''
     Num = (NumHotZ.get() *10 )
-    ser.write(int((Num+1), 'UTF-8'))
-    if datetime.now() >= clockHot :
-        ser.write(int(Num, 'UTF-8'))
+    NumOnn = int(Num + 1)
+    NumOff = int(Num - 1)
+    ser.write(bytes(NumOnn, 'UTF-8'))
+    '''
+    th = Thread(target=HourHot(i))
+    th.start()
+
 
 Zakaz_Button[1].configure(command = sendHot())
 
