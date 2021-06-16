@@ -7,7 +7,7 @@ from tkinter import messagebox
 import serial
 from datetime import datetime, timedelta
 from Golovna import Stolic,Fon,Stolic_time,Stolic_Text,Reset
-from Zakaz import  Button_Z,NameZakaz ,Number_Tap_text
+from Zakaz import  NameZakaz ,Number_Tap_text
 from menu import M_Text
 import mysql.connector
 from mysql.connector import connect, Error,cursor
@@ -100,7 +100,6 @@ NumZ = IntVar()
 NumHotZ = IntVar()
 FHourZ = IntVar()
 THourZ = IntVar()
-HourHotZ = IntVar()
 #Вибір номеру стола
 Zakaz_NumB_Check = ttk.Combobox(
     Vkladki[1],
@@ -135,9 +134,20 @@ Zakaz_Time_tHour = ttk.Combobox(
     textvariable=THourZ
 )
 Zakaz_Time_tHour['values'] = tuple(range(11,25))
+def Button_Z(i,Zakaz_B,Vkladki):
+    Zakaz_B[i] = tk.Button(
+        Vkladki[1],
+        text='Відправити',
+        font=('Arial Black', 14),
+        width=15,
+        height=1,
+        bg='#8cffa7',
+        relief =RIDGE)
+
 
 Zakaz_Button = ['1','2']
 Button_Z(0,Zakaz_Button,Vkladki)
+Button_Z(1,Zakaz_Button,Vkladki)
 '''
 def sendZakaz():
     count =  1
@@ -151,9 +161,9 @@ Zakaz_NumH_Check = ttk.Combobox(
     Vkladki[1],
     font=('Arial Black', 12),
     width=1,
-    textvariable=NumHotZ
+    values = list(range(1,7))
 )
-Zakaz_NumH_Check['values'] =tuple(range(1,7))
+Zakaz_NumH_Check.set(10)
 Zakaz_TextH = tk.Label(
     Vkladki[1],
     text='Кількість:           год.',
@@ -165,14 +175,15 @@ Zakaz_TimeH_Hour = ttk.Combobox(
     Vkladki[1],
     font=('Consolas', 12),
     width=2,
-    textvariable=HourHotZ
+    values = list(range(0,13))
+
     )
-Zakaz_TimeH_Hour['values'] = tuple(range(0,13))
+Zakaz_TimeH_Hour.set(0)
 def HourHot(i):
      if clockHot[i] < datetime.now():
          sleep(60)
          stan[i].configure(image=red)
-
+         print('work')
 
      else :
          '''ser.write(int((NumOff), 'UTF-8'))'''
@@ -181,16 +192,19 @@ def HourHot(i):
 
 
 def sendHot():
-    i = NumHotZ.get() - 1
-    clockHot[i] = datetime.now() + timedelta(hours = HourHotZ.get())
+    h = float(Zakaz_TimeH_Hour.get())
+    h = int(h)
+    i = float(Zakaz_NumH_Check.get())
+    i = int(i)
     '''
+    clockHot[i] = datetime.now() + timedelta(hours = h)
     Num = (NumHotZ.get() *10 )
     NumOnn = int(Num + 1)
     NumOff = int(Num - 1)
     ser.write(bytes(NumOnn, 'UTF-8'))
     '''
-    th = Thread(target=HourHot(i))
-    th.start()
+    stan[i].configure(image=red)
+
 
 
 Zakaz_Button[1].configure(command = sendHot())
