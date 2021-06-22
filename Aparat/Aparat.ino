@@ -20,16 +20,18 @@ void setup(){
   pinMode(p4, OUTPUT);
   pinMode(p5, OUTPUT);
   pinMode(p6, OUTPUT);
-  pinMode(pON, OUTPUT);
+  pinMode(pON,OUTPUT);
+  
   pinCount = 6;
-  digitalWrite(pON,HIGH);
 }
+
 void loop(){
   if(Serial.available() > 0){
+    digitalWrite(pON,HIGH);
     incomingByte = Serial.parseInt();
     pin = ((incomingByte - incomingByte % 10) / 10) + 4;
     mode = incomingByte % 10;
-
+    
     if(mode != 0 && mode != 1){
       mode = 0;
     }

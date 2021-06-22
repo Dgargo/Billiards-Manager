@@ -1,22 +1,19 @@
-
 from tkinter import *
 import tkinter as tk
 import tkinter.ttk as ttk
 from PIL import ImageTk, Image
-from tkinter import messagebox
 import serial
-from datetime import datetime, timedelta
-from Golovna import Stolic,Fon,Stolic_time,Stolic_Text,Reset
-from Zakaz import  NameZakaz ,Number_Tap_text
+import threading
+from datetime import datetime
+from  datetime import timedelta
+from Golovna import Stolic,Fon,Stolic_time,Stolic_Text,Reset,Timer_Menu
+from Zakaz import  NameZakaz,OthderTextZakaz,ButtonZakaz,NumTable,HourZakaz
 from menu import M_Text
 import mysql.connector
 from mysql.connector import connect, Error,cursor
-from threading import Thread
 from time import sleep
-'''
-ser = serial.Serial('COM4', 9600)
-'''
-clockHot = [1,2,3,4,5,6]
+#Серійний порт
+ser = serial.Serial('COM3', 9600)
 #БАЗА ДАНИХ
 mydb = mysql.connector.connect(
   host="localhost",
@@ -48,7 +45,6 @@ nb.add(Vkladki[0],text='Головна')
 nb.add(Vkladki[1],text='Новий заказ')
 nb.add(Vkladki[3],text='Меню')
 
-
 #Імпорт картинок
 table_img_one ="image/table.png"
 img = ImageTk.PhotoImage(Image.open(table_img_one))
@@ -65,14 +61,42 @@ resetI =tk.Label(Vkladki[0], image= reset)
 red_img = "image/red.png"
 red = ImageTk.PhotoImage(Image.open(red_img))
 redI = tk.Label(Vkladki[0],image = red)
+
+forTime_img = "image/forTime.png"
+forTime = ImageTk.PhotoImage(Image.open(forTime_img))
+forTimeI = tk.Label(Vkladki[0],image = forTime)
+
 #Налаштування  стилю фону вкладок
 fon = [1,2,3,4,5]
 Fon(0,fon,Vkladki)
 
+#Годинник
+Timer = [1,2,3]
+Timer_Menu(0,Timer,Vkladki,forTime)
+
+clock = (datetime.now()).strftime('%H:%M:%S')
+Clocks = tk.Label(
+    Vkladki[0],
+    text=clock,
+    font=('Arial Black', 28),
+    bg='#086e02',
+    )
+def clock_update():
+    while True:
+
+        Clocks['text'] = (datetime.now()).strftime('%H:%M:%S')
+        sleep(1)
+
+process = threading.Thread(target=clock_update)
+process.start()
 #Налаштування стилю столів
 table = [1, 2, 3, 4, 5, 6]
 Stolic(0,table,Vkladki,img)
-
+Stolic(1,table,Vkladki,img)
+Stolic(2,table,Vkladki,img)
+Stolic(3,table,Vkladki,img)
+Stolic(4,table,Vkladki,img)
+Stolic(5,table,Vkladki,img)
 #Налаштування стилю номера стола
 text = [1, 2, 3, 4, 5, 6]
 Stolic_Text(0,text,Vkladki)
@@ -80,135 +104,75 @@ Stolic_Text(0,text,Vkladki)
 #Налаштування стилю стану стола
 stan = [1, 2, 3, 4, 5, 6]
 Stolic(0,stan,Vkladki,gray)
-
-
+Stolic(1,stan,Vkladki,gray)
+Stolic(2,stan,Vkladki,gray)
+Stolic(3,stan,Vkladki,gray)
+Stolic(4,stan,Vkladki,gray)
+Stolic(5,stan,Vkladki,gray)
 #Налаштування стилю часу стола
-time = [1, 2, 3, 4, 5, 6]
-Stolic_time(0,time,Vkladki)
-
-#
+times = [1, 2, 3, 4, 5, 6]
+Stolic_time(0,times,Vkladki)
+Stolic_time(1,times,Vkladki)
+Stolic_time(2,times,Vkladki)
+Stolic_time(3,times,Vkladki)
+Stolic_time(4,times,Vkladki)
+Stolic_time(5,times,Vkladki)
+#Налаштування кнопки скидання
 res = [1, 2, 3, 4, 5, 6]
 Reset(0,res,Vkladki,reset)
 
 #Налаштування вкладки Заказ
-Zakaz_Text = ['1','2']
-NameZakaz(0,Zakaz_Text,Vkladki,"Забронювати стіл :")
-NameZakaz(1,Zakaz_Text,Vkladki,'Експресс заказ:')
-Zakaz_Num_Tap =['1','2']
-Number_Tap_text(0,Zakaz_Num_Tap,Vkladki)
-NumZ = IntVar()
-NumHotZ = IntVar()
-FHourZ = IntVar()
-THourZ = IntVar()
-#Вибір номеру стола
-Zakaz_NumB_Check = ttk.Combobox(
-    Vkladki[1],
-    font=('Arial Black', 12),
-    width=1,
-    textvariable=NumZ
-)
+Zakaz_Name = [1,2]
+NameZakaz(0,Zakaz_Name,Vkladki,'Забронювати стіл :')
+NameZakaz(1,Zakaz_Name,Vkladki,'Експрес заказ :')
 
-Zakaz_NumB_Check['values'] =tuple(range(1,7))
-
-#Налаштування тексту
-Zakaz_Time =tk.Label(
-        Vkladki[1],
-        text='Час, з:             до:     ',
-        font=('Arial Black', 12),
-        fg='black',
-        bg='#086e02',
-)
-
-Zakaz_Time_fHour = ttk.Combobox(
-    Vkladki[1],
-    font=('Arial Black', 12),
-    width=2,
-    textvariable=FHourZ
-    )
-Zakaz_Time_fHour['values'] = tuple(range(10,24))
-
-Zakaz_Time_tHour = ttk.Combobox(
-    Vkladki[1],
-    font=('Arial Black', 12),
-    width =2,
-    textvariable=THourZ
-)
-Zakaz_Time_tHour['values'] = tuple(range(11,25))
-def Button_Z(i,Zakaz_B,Vkladki):
-    Zakaz_B[i] = tk.Button(
-        Vkladki[1],
-        text='Відправити',
-        font=('Arial Black', 14),
-        width=15,
-        height=1,
-        bg='#8cffa7',
-        relief =RIDGE)
+Zakaz_Other_Text = [1,2,3,4]
+OthderTextZakaz(0,Zakaz_Other_Text,Vkladki,'Номер стола :')
+OthderTextZakaz(1,Zakaz_Other_Text,Vkladki,'З :          по :        годину ')
+OthderTextZakaz(2,Zakaz_Other_Text,Vkladki,'Номер стола :')
+OthderTextZakaz(3,Zakaz_Other_Text,Vkladki,'Кількість годин : ')
 
 
-Zakaz_Button = ['1','2']
-Button_Z(0,Zakaz_Button,Vkladki)
-Button_Z(1,Zakaz_Button,Vkladki)
-'''
-def sendZakaz():
-    count =  1
-    main_infos = [count,NumZ.get]
-    mycursor.executemany(billiard_room_statistics, main_infos)
-    mydb.commit()
-'''
-
-
-Zakaz_NumH_Check = ttk.Combobox(
-    Vkladki[1],
-    font=('Arial Black', 12),
-    width=1,
-    values = list(range(1,7))
-)
-Zakaz_NumH_Check.set(10)
-Zakaz_TextH = tk.Label(
-    Vkladki[1],
-    text='Кількість:           год.',
-    font=('Arial Black', 12),
-    bg='#086e02',
-)
-
-Zakaz_TimeH_Hour = ttk.Combobox(
-    Vkladki[1],
-    font=('Consolas', 12),
-    width=2,
-    values = list(range(0,13))
-
-    )
-Zakaz_TimeH_Hour.set(0)
-def HourHot(i):
-     if clockHot[i] < datetime.now():
-         sleep(60)
-         stan[i].configure(image=red)
-         print('work')
-
-     else :
-         '''ser.write(int((NumOff), 'UTF-8'))'''
-         stan[i].configure(image=gray)
-
-
-
-def sendHot():
-    h = float(Zakaz_TimeH_Hour.get())
+Seconds = [1,2,3,4,5,6]
+ports =[1,2,3,4,5,6]
+PortsON = [1,2,3,4,5,6]
+PortsOff = [1,2,3,4,5,6]
+Time_off = [1,2,3,4,5,6]
+delay = [1,2,3,4,5,6]
+def ChabgeStan():
+    h = Zakaz_Hour[2].get()
     h = int(h)
-    i = float(Zakaz_NumH_Check.get())
-    i = int(i)
-    '''
-    clockHot[i] = datetime.now() + timedelta(hours = h)
-    Num = (NumHotZ.get() *10 )
-    NumOnn = int(Num + 1)
-    NumOff = int(Num - 1)
-    ser.write(bytes(NumOnn, 'UTF-8'))
-    '''
-    stan[i].configure(image=red)
+    timer =timedelta(hours=h,minutes=0,seconds=0)
+    n = Zakaz_Num[1].get()
+    n = int(n) - 1
+    x = datetime.now()
+    Time_off[n] = timedelta(hours=x.hour,minutes=x.minute,seconds=x.second) + timedelta(hours=h)
+    stan[n].configure(image=red)
+    times[n].configure(text=timer)
+    Seconds[n] = h *60*60
+    ports[n] = (n+1) * 10
+    PortsON[n] = ports[n] +1
+    PortsOff[n] = ports[n]
+    ser.write(str(PortsON[n]).encode())
+    delay =(timer).total_seconds()
+    print(delay)
+    def Virupai():
+            ser.write(str(PortsOff[n]).encode())
+            stan[n].configure(image=gray)
+    threading.Timer(delay, Virupai).start()
 
+Zakaz_Button = [1,2]
+ButtonZakaz(0,Zakaz_Button,Vkladki,ChabgeStan)
+ButtonZakaz(1,Zakaz_Button,Vkladki,ChabgeStan)
+Zakaz_Num = [1,2]
+NumTable(0,Zakaz_Num,Vkladki)
+NumTable(1,Zakaz_Num,Vkladki)
 
-
-Zakaz_Button[1].configure(command = sendHot())
-
+Zakaz_Hour = [1,2,3]
+HourZakaz(0,Zakaz_Hour,Vkladki,10,24)
+HourZakaz(1,Zakaz_Hour,Vkladki,11,25)
+HourZakaz(2,Zakaz_Hour,Vkladki,1,15)
+#налаштування вкладки меню
 Menu_Text = ['1','2','3']
 M_Text(0,Menu_Text,Vkladki,16,'Вхід до панелі адміна')
 M_Text(1,Menu_Text,Vkladki,12,'Логін:')
@@ -320,14 +284,16 @@ M_Button = tk.Button(
             bg='#8cffa7',
             command=panel
 )
-
 #Налаштування розміщення  елементів
 window.resizable(False,False)
 i=0
 while i<=4:
     fon[i].pack()
     i +=1
+#Вкладка головна
 
+Timer[0].place(x=240,y=20)
+Clocks.place(x=257,y=40)
 table[0].place(x=20, y=50)
 table[1].place(x=470, y=50)
 table[2].place(x=20, y=300)
@@ -335,12 +301,12 @@ table[3].place(x=470, y=300)
 table[4].place(x=20, y=550)
 table[5].place(x=470, y=550)
 
-text[0].place(x=100, y=19)
-text[1].place(x=550, y=19)
-text[2].place(x=100, y=269)
-text[3].place(x=550, y=269)
-text[4].place(x=100, y=519)
-text[5].place(x=550, y=519)
+text[0].place(x=100, y=15)
+text[1].place(x=550, y=15)
+text[2].place(x=100, y=265)
+text[3].place(x=550, y=265)
+text[4].place(x=100, y=515)
+text[5].place(x=550, y=515)
 
 stan[0].place(x=20, y=165)
 stan[1].place(x=470, y=165)
@@ -348,35 +314,39 @@ stan[2].place(x=20, y=415)
 stan[3].place(x=470, y=415)
 stan[4].place(x=20, y=665)
 stan[5].place(x=470, y=665)
-
-time[0].place(x=80, y=180)
-time[1].place(x=530, y=180)
-time[2].place(x=80, y=430)
-time[3].place(x=530, y=430)
-time[4].place(x=80, y=680)
-time[5].place(x=530, y=680)
-
+'''
+times[0].place(x=80, y=180)
+times[1].place(x=530, y=180)
+times[2].place(x=80, y=430)
+times[3].place(x=530, y=430)
+times[4].place(x=80, y=680)
+times[5].place(x=530, y=680)
+'''
 res[0].place(x=172, y=175)
 res[1].place(x=622, y=175)
 res[2].place(x=172, y=425)
 res[3].place(x=622, y=425)
 res[4].place(x=172, y=675)
 res[5].place(x=622, y=675)
+#Вкладка заказ
+#Zakaz_Name[0].place(x=200, y=30)
+Zakaz_Name[1].place(x=220, y=30)
+'''
+Zakaz_Other_Text[0].place(x=160, y=100)
+Zakaz_Other_Text[1].place(x=160, y=150)
+'''
+Zakaz_Other_Text[2].place(x=160, y=100)
+Zakaz_Other_Text[3].place(x=160, y=150)
 
-Zakaz_Text[0].place(x=50,y=15)
-Zakaz_Num_Tap[0].place(x=30, y=75)
-Zakaz_NumB_Check.place(x=160, y=75)
-Zakaz_Time.place(x=30, y=130)
-Zakaz_Time_fHour.place(x=100, y=130)
-Zakaz_Time_tHour.place(x=193, y=130)
-Zakaz_Button[0].place(x=30, y=180)
-Zakaz_Text[1].place(x=50, y=250)
-Zakaz_Num_Tap[1].place(x=30, y=300)
-Zakaz_NumH_Check.place(x=160, y=300)
-Zakaz_TextH.place(x=30,y=355)
-Zakaz_TimeH_Hour.place(x=125,y=355)
-Zakaz_Button[1].place(x=30, y=415)
+#Zakaz_Button[0].place(x=200, y=200)
+Zakaz_Button[1].place(x=200, y=200)
 
+#Zakaz_Num[0].place(x=320, y=100)
+Zakaz_Num[1].place(x=322, y=100)
+
+#Zakaz_Hour[0].place(x=193, y=150)
+#Zakaz_Hour[1].place(x=280, y=150)
+Zakaz_Hour[2].place(x=350, y=150)
 
 Menu_Text[0].place(x=50,y=10)
 Menu_Text[1].place(x=15,y=65)
@@ -384,7 +354,4 @@ Menu_Text[2].place(x=15,y=100)
 M_Login.place(x=95,y=65)
 M_Parol.place(x=95,y=100)
 M_Button.place(x=85,y=150)
-
-
-
 window.mainloop()
