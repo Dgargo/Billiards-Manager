@@ -1,5 +1,6 @@
-
+from tkinter import *
 import tkinter as tk
+import tkinter.ttk as ttk
 from PIL import ImageTk, Image
 
 #Налаштування  стилю фону вкладок
@@ -43,15 +44,15 @@ def Stolic_time(i,time,Vkladki):
             )
 
 #Налаштування стилю кнопки скидання
-def Reset(i,res,Vkladki,img):
-    while i<=5:
+def ResetButton(i,res,Vkladki,img,func):
         res[i]=tk.Button(
             Vkladki[0],
             bg = '#e82528',
             image=img,
+            command = func
 
         )
-        i += 1
+
 
 
 def Timer_Menu(i,Name,Vkladki,img):
@@ -60,5 +61,41 @@ def Timer_Menu(i,Name,Vkladki,img):
         bg='#086e02',
         image=img,
          )
+
+def Drop(i,stan,gray,ser,Vkladki):
+    SurePanal = tk.Toplevel(Vkladki[0], bg='#086e02')
+    SurePanal.geometry('400x150')
+    SurePanal.resizable(False, False)
+    num = i +1
+    def YesSure():
+        stan[i].configure(image=gray)
+        ser.write(str((i + 1) * 10).encode())
+        SurePanal.destroy()
+    def NoSure():
+        SurePanal.destroy()
+    SureText = tk.Label(SurePanal,
+                        text=f"Відключити стіл №{num} ?",
+                        font=('Arial Black', 20),
+                        bg='#086e02')
+    SureYes = tk.Button(SurePanal,
+                        text='ТАК',
+                        font=('Arial Black', 20),
+                        width=5,
+                        height=1,
+                        bg='#8cffa7',
+                        command=YesSure
+                        )
+    SureNo = tk.Button(SurePanal,
+                        text='НІ',
+                        font=('Arial Black', 20),
+                        width=5,
+                        height=1,
+                        bg='#fa2525',
+                        command=NoSure
+                        )
+    SureText.place(x=35,y=10)
+    SureYes.place(x=75,y=50)
+    SureNo.place(x=225,y=50)
+
 
 
