@@ -1,8 +1,8 @@
 from tkinter import *
 import tkinter as tk
 import tkinter.ttk as ttk
-from PIL import ImageTk, Image
 
+#Налаштування заголовків в вкладці заказ
 def NameZakaz(i,Name,Vkladki,text):
     Name[i] = tk.Label(
         Vkladki[1],
@@ -10,7 +10,7 @@ def NameZakaz(i,Name,Vkladki,text):
         font=('Arial Black', 18),
         bg='#086e02'
         )
-
+#Налаштування тексту в вкладці заказ
 def OthderTextZakaz(i,Name,Vkladki,text):
     Name[i] = tk.Label(
         Vkladki[1],
@@ -18,7 +18,7 @@ def OthderTextZakaz(i,Name,Vkladki,text):
         font=('Arial Black', 14),
         bg='#086e02'
     )
-
+#Налаштування кнопок в вкладці заказ
 def ButtonZakaz(i,Buton,Vkladki,funct):
     Buton[i]=tk.Button(
         Vkladki[1],
@@ -30,7 +30,7 @@ def ButtonZakaz(i,Buton,Vkladki,funct):
         relief=RIDGE,
         command = funct
     )
-
+#Налаштування вибору номера стола
 def NumTable(i,NumB,Vkladki):
     NumB[i]= ttk.Combobox(
         Vkladki[1],
@@ -38,7 +38,7 @@ def NumTable(i,NumB,Vkladki):
         width=1,
         values=list(range(1, 7))
     )
-
+#Налаштування кількості годин
 def HourZakaz(i,Hour,Vkladki,a,b):
     Hour[i] = ttk.Combobox(
         Vkladki[1],

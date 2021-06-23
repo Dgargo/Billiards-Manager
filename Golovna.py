@@ -1,7 +1,5 @@
-from tkinter import *
+
 import tkinter as tk
-import tkinter.ttk as ttk
-from PIL import ImageTk, Image
 
 #Налаштування  стилю фону вкладок
 def Fon(i,fon,Vkladki):
@@ -54,7 +52,7 @@ def ResetButton(i,res,Vkladki,img,func):
         )
 
 
-
+#Налаштування годинника
 def Timer_Menu(i,Name,Vkladki,img):
     Name[i] = tk.Label(
         Vkladki[0],
@@ -62,6 +60,7 @@ def Timer_Menu(i,Name,Vkladki,img):
         image=img,
          )
 
+#Налаштування кнопки скидання
 def Drop(i,stan,gray,ser,Vkladki):
     SurePanal = tk.Toplevel(Vkladki[0], bg='#086e02')
     SurePanal.geometry('400x150')
@@ -94,8 +93,8 @@ def Drop(i,stan,gray,ser,Vkladki):
                         command=NoSure
                         )
     SureText.place(x=35,y=10)
-    SureYes.place(x=75,y=50)
-    SureNo.place(x=225,y=50)
+    SureYes.place(x=75,y=60)
+    SureNo.place(x=225,y=60)
 
 
 

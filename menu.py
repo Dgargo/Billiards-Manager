@@ -1,8 +1,7 @@
 
-from tkinter import *
 import tkinter as tk
-import tkinter.ttk as ttk
 
+#Налаштування стилю тексту в вкладці меню
 def M_Text(i,Name,Vkladki,Fsize,text):
     Name[i] = tk.Label(
         Vkladki[3],

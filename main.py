@@ -75,18 +75,7 @@ admin_img = "image/admin.png"
 admin = ImageTk.PhotoImage(Image.open(admin_img))
 adminI = tk.Label(Vkladki[2],image = admin)
 
-Order = [1,2,3]
-Order[0] = tk.Label(
-        Vkladki[1],
-        bg='#086e02',
-        image=order,
-         )
-Admin = [1,2,3]
-Admin[0] = tk.Label(
-        Vkladki[3],
-        bg='#086e02',
-        image=admin,
-         )
+
 #Налаштування  стилю фону вкладок
 fon = [1,2,3,4,5]
 Fon(0,fon,Vkladki)
@@ -160,39 +149,107 @@ OthderTextZakaz(2,Zakaz_Other_Text,Vkladki,'Номер стола :')
 OthderTextZakaz(3,Zakaz_Other_Text,Vkladki,'Кількість годин : ')
 
 
+#Змінні для  обробки заказу
 Seconds = [1,2,3,4,5,6]
 ports =[1,2,3,4,5,6]
 PortsON = [1,2,3,4,5,6]
 PortsOff = [1,2,3,4,5,6]
 Time_off = [1,2,3,4,5,6]
 delay = [1,2,3,4,5,6]
-suma = 0
 Price = 100
 cost = 0
+#Функція обробки заказу
 def ChabgeStan():
-    h = Zakaz_Hour[2].get()
-    h = int(h)
-    cost = Price*h
-    timer =timedelta(hours=h,minutes=0,seconds=0)
     n = Zakaz_Num[1].get()
     n = int(n) - 1
+    h = Zakaz_Hour[2].get()
+    h = int(h)
     x = datetime.now()
-    Time_off[n] = timedelta(hours=x.hour,minutes=x.minute,seconds=x.second) + timedelta(hours=h)
-    stan[n].configure(image=red)
-    times[n].configure(text=timer)
-    Seconds[n] = h *60*60
-    ports[n] = (n+1) * 10
-    PortsON[n] = ports[n] +1
-    PortsOff[n] = ports[n]
-    ser.write(str(PortsON[n]).encode())
-    delay =(timer).total_seconds()
-    print(delay)
+    Time_off[n] = timedelta(hours=x.hour, minutes=x.minute, seconds=x.second) + timedelta(hours=h)
+    timer = timedelta(hours=h, minutes=0, seconds=0)
+    riv  = int(x.hour)+h
+    if riv > 24 :
+        ErrorZakaz = tk.Toplevel(Vkladki[1], bg='#086e02')
+        ErrorZakaz.geometry('400x100')
+        ErrorZakaz.resizable(False, False)
+        def ErrorExit():
+            ErrorZakaz.destroy()
+        ErrorText = tk.Label(ErrorZakaz,
+                            text="Виберіть меншу кількість годин!!!",
+                            font=('Arial Black', 14),
+                            bg='#086e02')
+        ErrorOk = tk.Button(ErrorZakaz,
+                            text='OK',
+                            font=('Arial Black', 14),
+                            width=20,
+                            height=1,
+                            bg='#fa2525',
+                            command=ErrorExit
+                            )
+        ErrorText.place(x=15,y=10)
+        ErrorOk.place(x=60,y=45)
+    else:
+        cost = Price*h
+        stan[n].configure(image=red)
+        times[n].configure(text=timer)
+        Seconds[n] = h *60*60
+        ports[n] = (n+1) * 10
+        PortsON[n] = ports[n] +1
+        PortsOff[n] = ports[n]
+        ser.write(str(PortsON[n]).encode())
+        delay =(timer).total_seconds()
+        SumaZakaz = tk.Toplevel(Vkladki[1], bg='#086e02')
+        SumaZakaz.geometry('300x200')
+        SumaZakaz.resizable(False, False)
 
-    def Virupai():
-            ser.write(str(PortsOff[n]).encode())
-            stan[n].configure(image=gray)
-    threading.Timer(delay, Virupai).start()
-suma +=cost
+        SumaText = tk.Label(SumaZakaz,
+                            text="Заказ сформовано!",
+                            font=('Arial Black', 16),
+                            bg='#086e02')
+        SumaNum = tk.Label(SumaZakaz,
+                            text=f"Номер стола : {n+1}",
+                            font=('Arial Black', 14),
+                            bg='#086e02')
+        SumaTime = tk.Label(SumaZakaz,
+                           text=f"До : {Time_off[n]}",
+                           font=('Arial Black', 14),
+                           bg='#086e02')
+        SumaPrice = tk.Label(SumaZakaz,
+                            text=f"Ціна : {cost} грн.",
+                            font=('Arial Black', 14),
+                            bg='#086e02')
+        def SumaExit():
+            SumaZakaz.destroy()
+        SumaOk = tk.Button(SumaZakaz,
+                            text='OK',
+                            font=('Arial Black', 14),
+                            width=4,
+                            height=1,
+                            bg='#8cffa7',
+                            command= SumaExit
+                            )
+
+        SumaText.place(x=30,y=10)
+        SumaNum.place(x=10,y=50)
+        SumaTime.place(x=10,y=85)
+        SumaPrice.place(x=10,y=120)
+        SumaOk.place(x=230,y=145)
+        mycursor = mydb.cursor()
+        billiard_room_statistics = """
+        INSERT INTO main_info 
+        (id,orderdate,ordertime,countHours,numberTable,revenue)
+        VALUES ( %s,%s,%s ,%s,%s,%s)
+        """
+
+        main_infos = [('', f'{x.year}/{x.month}/{x.day}', f'{x.hour}:{x.minute}:{x.second}', f'{h}', f'{n+1}', f'{cost}' )]
+        mycursor.executemany(billiard_room_statistics, main_infos)
+        mydb.commit()
+
+        def Virupai():
+                ser.write(str(PortsOff[n]).encode())
+                stan[n].configure(image=gray)
+        threading.Timer(delay, Virupai).start()
+
 Zakaz_Button = [1,2]
 ButtonZakaz(0,Zakaz_Button,Vkladki,ChabgeStan)
 ButtonZakaz(1,Zakaz_Button,Vkladki,ChabgeStan)
@@ -204,6 +261,7 @@ Zakaz_Hour = [1,2,3]
 HourZakaz(0,Zakaz_Hour,Vkladki,10,24)
 HourZakaz(1,Zakaz_Hour,Vkladki,11,25)
 HourZakaz(2,Zakaz_Hour,Vkladki,1,15)
+
 #налаштування вкладки меню
 Menu_Text = ['1','2','3']
 M_Text(0,Menu_Text,Vkladki,16,'Вхід до панелі адміна')
@@ -228,6 +286,7 @@ M_Parol = tk.Entry(
 )
 fonLogin = ' '
 fonParol = '  '
+#Функція налаштування адмін панелі
 def panel():
     if login.get() =='admin':
         if parol.get() == 'admin':
@@ -357,7 +416,7 @@ res[3].place(x=622, y=425)
 res[4].place(x=172, y=675)
 res[5].place(x=622, y=675)
 #Вкладка заказ
-Order[0].place(x=100,y=50)
+orderI.place(x=100,y=50)
 #Zakaz_Name[0].place(x=200, y=30)
 Zakaz_Name[1].place(x=220, y=30)
 '''
@@ -376,7 +435,9 @@ Zakaz_Num[1].place(x=322, y=100)
 #Zakaz_Hour[0].place(x=193, y=150)
 #Zakaz_Hour[1].place(x=280, y=150)
 Zakaz_Hour[2].place(x=350, y=150)
-Admin[0].place(x=400,y=150)
+
+#Вкладка меню
+adminI.place(x=400,y=150)
 Menu_Text[0].place(x=50,y=10)
 Menu_Text[1].place(x=15,y=65)
 Menu_Text[2].place(x=15,y=100)
