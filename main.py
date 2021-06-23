@@ -6,7 +6,7 @@ import serial
 import threading
 from datetime import datetime
 from  datetime import timedelta
-from Golovna import Stolic,Fon,Stolic_time,Stolic_Text,ResetButton,Timer_Menu,Drop
+from Golovna import Stolic,Fon,Stolic_time,Stolic_Text,ResetButton,Timer_Menu,Drop,IMG
 from Zakaz import  NameZakaz,OthderTextZakaz,ButtonZakaz,NumTable,HourZakaz
 from menu import M_Text
 import mysql.connector
@@ -69,11 +69,11 @@ forTimeI = tk.Label(Vkladki[0],image = forTime)
 
 order_img = "image/order.png"
 order = ImageTk.PhotoImage(Image.open(order_img))
-orderI = tk.Label(Vkladki[1],image = order)
+orderI = tk.Label(Vkladki[1],image = order,bg = '#e82528',)
 
 admin_img = "image/admin.png"
 admin = ImageTk.PhotoImage(Image.open(admin_img))
-adminI = tk.Label(Vkladki[2],image = admin)
+adminI = tk.Label(Vkladki[1],image = admin,bg = '#e82528',)
 
 
 #Налаштування  стилю фону вкладок
@@ -310,7 +310,6 @@ def panel():
                 M_Parol.insert('0',fonParol)
             def Baze():
                 webbrowser.open_new(r"http://localhost/phpmyadmin/index.php?route=/database/structure&server=1&db=billiard_room_statistics")
-                print('work')
             Save = tk.Button(AdminPanel,
                              text="Вихід",
                              font=('Arial Black', 14),
@@ -401,14 +400,7 @@ stan[2].place(x=20, y=415)
 stan[3].place(x=470, y=415)
 stan[4].place(x=20, y=665)
 stan[5].place(x=470, y=665)
-'''
-times[0].place(x=80, y=180)
-times[1].place(x=530, y=180)
-times[2].place(x=80, y=430)
-times[3].place(x=530, y=430)
-times[4].place(x=80, y=680)
-times[5].place(x=530, y=680)
-'''
+
 res[0].place(x=172, y=175)
 res[1].place(x=622, y=175)
 res[2].place(x=172, y=425)
@@ -416,28 +408,16 @@ res[3].place(x=622, y=425)
 res[4].place(x=172, y=675)
 res[5].place(x=622, y=675)
 #Вкладка заказ
-orderI.place(x=100,y=50)
-#Zakaz_Name[0].place(x=200, y=30)
+
 Zakaz_Name[1].place(x=220, y=30)
-'''
-Zakaz_Other_Text[0].place(x=160, y=100)
-Zakaz_Other_Text[1].place(x=160, y=150)
-'''
+
 Zakaz_Other_Text[2].place(x=160, y=100)
 Zakaz_Other_Text[3].place(x=160, y=150)
-
-#Zakaz_Button[0].place(x=200, y=200)
 Zakaz_Button[1].place(x=200, y=200)
-
-#Zakaz_Num[0].place(x=320, y=100)
 Zakaz_Num[1].place(x=322, y=100)
-
-#Zakaz_Hour[0].place(x=193, y=150)
-#Zakaz_Hour[1].place(x=280, y=150)
 Zakaz_Hour[2].place(x=350, y=150)
 
 #Вкладка меню
-adminI.place(x=400,y=150)
 Menu_Text[0].place(x=50,y=10)
 Menu_Text[1].place(x=15,y=65)
 Menu_Text[2].place(x=15,y=100)
@@ -446,3 +426,4 @@ M_Login.place(x=95,y=65)
 M_Parol.place(x=95,y=100)
 M_Button.place(x=85,y=150)
 window.mainloop()
+
